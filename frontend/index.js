@@ -18,23 +18,11 @@ const fetchData = async () => {
     return { learners: learnersData.data, mentors: mentorsData.data };
   } catch (error) {
     console.error('Error fetching data:', error.message);
-    throw error; // Propagate the error to handle it in the next catch block
+    throw error; 
   }
 };
 
-// Call fetchData to get combined data from both endpoints
 const combinedData = await fetchData();
-
-// Combine data into a single data structure
-const learnersWithMentors = combinedData.learners.map(learner => {
-  const mentorNames = learner.mentors.map(mentorId => {
-    const mentor = combinedData.mentors.find(mentor => mentor.id === mentorId);
-    return mentor ? mentor.name : 'Unknown Mentor';
-  });
-
-  return { ...learner, mentorNames };
-});
-
 
   
   document.querySelector('.cards').addEventListener('click', async evt =>{
